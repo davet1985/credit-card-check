@@ -18,12 +18,18 @@ public class CreditCard {
     this.mCardNumber = pCardNumber;
   }
   
-  
+  /**
+   * 
+   * @return the mCardType
+   */
   public String getCardType() {
+    // set to Unknown by default
     this.mCardType = "Unknown";
     
+    // first indicator is the number length
     switch (this.mCardNumber.length()) {
-      case 13: 
+      case 13:
+        //second indicator is the the start of the number
         if (this.mCardNumber.startsWith("4")) {
           this.mCardType = "Visa";
         }
@@ -47,16 +53,22 @@ public class CreditCard {
     }
     
     System.out.print(this.mCardType+": "+this.mCardNumber);
+    //once the card type has been discovered return it.
     return this.mCardType;
   }
   
   public String validateCardNumber() {
     
     int count = 0;
+    //loop over each digit in the card number
     for (int i=this.mCardNumber.length(); i>0; i--) {
+      //if it is the last digit or every other one then leave it untouched and add to the count
       if ((this.mCardNumber.length()-i) % 2 == 0 ) {
           count+=Integer.parseInt(this.mCardNumber.substring(i-1, i));
-      } else {
+      }
+      //double the second to last digit and every other and add to the count
+      else {
+        //if the doubled digit is > 10, we must add the individual digits together and then add to the count
         if (String.valueOf(Integer.parseInt(this.mCardNumber.substring(i-1, i)) * 2).length() == 2) {
           count += Integer.parseInt(String.valueOf(Integer.parseInt(this.mCardNumber.substring(i-1, i)) * 2).substring(0, 1)) + Integer.parseInt(String.valueOf(Integer.parseInt(this.mCardNumber.substring(i-1, i)) * 2).substring(1, 2));
         } else {
@@ -65,6 +77,7 @@ public class CreditCard {
       }
     }
     
+    // if the total count in a multiple of 10 it is valid
     if (count%10 == 0) {
       System.out.print(" (valid)");
       return "valid";
