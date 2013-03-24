@@ -11,9 +11,10 @@ package creditcard;
 public class CreditCardRun {
   
   public static void main(String[] args) {
-    CreditCard cc = new CreditCard("4417123456789112");
-    System.out.println(cc.getCardType());
-    System.out.println(cc.validateCardNumber());
+    Luhn luhn = new Luhn();
+    CreditCard cc = new CreditCard("4111111111111111");
+    cc.setCardType(luhn.getCardType(cc.getCardNumber()));
+    cc.setCardNumberValid(luhn.validateCardNumber(cc.getCardNumber()));
   }
   
 }
